@@ -44,6 +44,13 @@ void CHIP8_Debugger(CHIP8* chip)
             printf("HEX: %02X ",chip->memory[i]);
         }
     }
+
+    for(int i = 0; i < 16 ; i++)
+    {
+        chip->registers_v[i] = i;
+        printf("V%x:0x%X\n",i,chip->registers_v[i]);
+    }
+
     printf("\nRom size:%d bytes",chip->rom_size);
     printf("\nCHIP-8 size:%d bytes",sizeof(CHIP8));
 }

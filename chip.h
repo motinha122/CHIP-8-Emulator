@@ -4,12 +4,14 @@
 #include <string.h>
 #define MEMSIZE 4096
 
-
 typedef struct
 {
-    uint16_t pc;
-    uint8_t memory[MEMSIZE];
-    uint16_t rom_size;
+    uint16_t pc; //16-bit Program Counter
+    uint8_t memory[MEMSIZE]; //Ram 4096bytes
+    uint16_t rom_size;  //Rom Size
+    uint8_t registers_v[16];  //8-bit V Registers
+    uint16_t register_i; // 16-bit I Register
+
 }CHIP8;
 
 CHIP8 *CHIP8_Create();
