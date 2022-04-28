@@ -38,10 +38,12 @@ void CHIP8_Debugger(CHIP8* chip)
 {
     for(int i =0 ; i < chip->rom_size ; i++)
     {
-        if (i % 2 != 0){
+        if (i % 2 != 0)
+        {
             printf("%02X \n",chip->memory[i]);
         }
-        else{
+        else
+        {
             printf("HEX: %02X ",chip->memory[i]);
         }
     }
