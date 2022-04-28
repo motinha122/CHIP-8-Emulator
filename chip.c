@@ -7,7 +7,10 @@ CHIP8 *CHIP8_Create()
     CHIP8 *chip = malloc(sizeof(CHIP8));
 
     chip->pc = 0;
+    chip->sp = 0;
     memset(chip->memory, 0 ,MEMSIZE);
+    memset(chip->registers_v,0,NUMREG);
+    memset(chip->stack,0,NUMREG);
 
     return chip;
 }   
@@ -27,9 +30,7 @@ void CHIP8_Load_Rom(CHIP8 * chip, const char *rom_path)
     size_t size = ftell(rom);
     chip->rom_size = size;
     fseek(rom,0,SEEK_SET);
-
     fread(chip->memory,size,1,rom);
-
     fclose(rom);
 }
 
