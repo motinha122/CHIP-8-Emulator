@@ -36,20 +36,46 @@ void CHIP8_Load_Rom(CHIP8 * chip, const char *rom_path)
     printf("\nRom size:%d bytes\n" , chip->rom_size);
 }
 
+void CHIP8_Fetch(CHIP8 * chip)
+{
+    chip->opcode = chip->memory[chip->pc] << 8 | chip->memory[chip->pc + 1];
+    printf("CHIP-8 opcode : 0x%X\n",chip->opcode);
+}
+
+void CHIP8_Decode(CHIP8 * chip)
+{
+    chip->ir = chip->opcode;
+
+    switch (chip->ir & 0xF000)
+    {
+    case(0x0000):
+        switch (chip->ir & 0x00FF)
+        {
+        case(0x00E0): printf("00E0 : Clear Screen\n");break;
+
+        case(0x00EE): printf("00EE : Return from subroutine\n");break;
+
+        default: printf("Error\n");break;
+        }
+
+    case(0x1000): printf("1nnn : Jump to location\n");break;
+
+    case(0x2000): printf("2nnn : Call subroutine\n");break;
+    
+    case(0x3000): printf("3xkk : Skip next if Vx = kk\n");break;
+
+    default: printf("Error\n");break;
+    }
+}
+
 void CHIP8_Run_Cycle(CHIP8* chip)
 {
     for (int i = 0; i < chip->rom_size; i+=2)
     {
         chip->pc = i;
         CHIP8_Fetch(chip);
+        CHIP8_Decode(chip);
     }
-    
-}
-
-void CHIP8_Fetch(CHIP8 * chip)
-{
-    chip->opcode = chip->memory[chip->pc] << 8 | chip->memory[chip->pc + 1];
-    printf("CHIP-8 opcode : 0x%X\n",chip->opcode);
 }
 
 void CHIP8_Debugger(CHIP8* chip)
