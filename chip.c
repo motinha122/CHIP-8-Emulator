@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "chip.h"
 
 CHIP8 *CHIP8_Create()
@@ -44,27 +45,145 @@ void CHIP8_Fetch(CHIP8 * chip)
 
 void CHIP8_Decode(CHIP8 * chip)
 {
-    chip->ir = chip->opcode;
+    uint16_t nnn = 0;
+    uint8_t n = 0 , x = 0 , y = 0 , kk = 0;
 
-    switch (chip->ir & 0xF000)
+    switch (chip->opcode & 0xF000)
     {
     case(0x0000):
-        switch (chip->ir & 0x00FF)
+        switch (chip->opcode & 0x00FF)
         {
-        case(0x00E0): printf("00E0 : Clear Screen\n");break;
+        case(0x00E0): printf("Clear display");
+        break;
 
-        case(0x00EE): printf("00EE : Return from subroutine\n");break;
+        case(0x00EE): 
+        break;
 
-        default: printf("Error\n");break;
+        default : printf("Error");
+        break;
         }
 
-    case(0x1000): printf("1nnn : Jump to location\n");break;
+    case(0x1000): 
+    break;
 
-    case(0x2000): printf("2nnn : Call subroutine\n");break;
+    case(0x2000): 
+    break;
     
-    case(0x3000): printf("3xkk : Skip next if Vx = kk\n");break;
+    case(0x3000): 
+    break;
 
-    default: printf("Error\n");break;
+    case(0x4000): 
+    break;
+
+    case(0x5000): 
+    break;
+
+    case(0x6000): 
+    break;
+
+    case(0x7000): 
+    break;
+
+    case(0x8000):
+        switch (chip->opcode & 0x000F)
+        {
+        case(0x0000): 
+            break;
+        
+        case(0x0001): 
+            break;
+
+        case(0x0002): 
+            break;
+
+        case(0x0003): 
+            break;
+        
+        case(0x0004): 
+            break;
+
+        case(0x0005): 
+            break;
+
+        case(0x0006): 
+            break;
+        
+        case(0x0007): 
+            break;
+        
+        case(0x000E): 
+            break;
+        
+        default : printf("Error");
+            break;
+        }
+    break;
+
+    case(0x9000): 
+        break;
+
+    case(0xA000): 
+        break;
+    
+    case(0xB000): 
+        break;
+
+    case(0xC000): 
+        break;
+
+    case(0xD000): 
+        break;
+
+    case(0xE000):
+        switch (chip->opcode & 0x00FF)
+        {
+        case(0x009E): 
+            break;
+        
+        case(0x00A1): 
+
+        default : printf("Error");
+            break;
+        }
+        break;
+
+    case(0xF000):
+        switch (chip->opcode & 0x00FF)
+        {
+        case(0x0007): 
+            break;
+
+        case(0x000A): 
+            break;
+
+        case(0x0015): 
+            break;
+
+        case(0x0018): 
+            break;
+
+        case(0x001E): 
+            break;
+        
+        case(0x0029): 
+            break;
+        
+        case(0x0033): 
+            break;
+
+        case(0x0055): 
+            break;
+
+        case(0x0065): 
+            break;
+
+        
+        default : printf("Error");
+            break;
+        }
+        break;
+    default : printf("Error");
+    break;
     }
 }
 
