@@ -10,7 +10,7 @@ typedef struct
     uint8_t memory[MEMSIZE]; //Ram 4096bytes
     uint16_t rom_size;  //Rom Size
     uint16_t pc; //16-bit Program Counter
-    uint8_t sp; // 8-bit Stack Pointer
+    uint16_t sp; // 16-bit Stack Pointer
     uint16_t opcode; // 16-bit Opcode
     uint8_t registers_v[NUMREG];  //8-bit V Registers
     uint16_t i; // 16-bit I Register
