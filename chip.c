@@ -7,13 +7,14 @@ CHIP8 *CHIP8_Create()
 {   
     CHIP8 *chip = malloc(sizeof(CHIP8));
 
-    chip->pc = 0;
+    chip->pc = 0x200;
     chip->sp = -1;
     memset(chip->memory, 0 ,MEMSIZE);
     memset(chip->registers_v,0,NUMREG);
     memset(chip->stack,0,NUMREG);
 
     printf("\nChip Initialized\n");
+
     return chip;
 }   
 
@@ -31,17 +32,17 @@ void CHIP8_Load_Rom(CHIP8 * chip, const char *rom_path)
     size_t size = ftell(rom);
     chip->rom_size = size;
     fseek(rom , 0 , SEEK_SET);
-    fread(chip->memory , size , 1 , rom);
+    fread(chip->memory+0x200 , size , 1 , rom);
     fclose(rom);
     printf("Rom loaded on Ram");
     printf("\nRom size:%d bytes\n\n" , chip->rom_size);
 }
-
+ 
 void CHIP8_Fetch(CHIP8 * chip)
 {
     chip->opcode = chip->memory[chip->pc] << 8 | chip->memory[chip->pc + 1];
     printf("\nCHIP-8 opcode 0x%X\n",chip->opcode);
-    printf("CHIP-8 pc $%X\n",chip->pc);
+    printf("CHIP-8 pc $%X\n",chip->pc,chip->pc);
 }
 
 void CHIP8_Decode(CHIP8 * chip)
@@ -57,21 +58,19 @@ void CHIP8_Decode(CHIP8 * chip)
     switch (chip->opcode & 0xF000)
     {
     case(0x0000):
+
         switch (chip->opcode & 0x00FF)
         {
         case(0x00E0): printf("CLS\n");
-        chip->pc +=2;
         break;
 
         case(0x00EE): printf("RET\n");
         chip->pc = chip->stack[chip->sp];
         chip->stack[chip->sp] = 0;
         chip->sp -= 1;
-        chip->pc +=2;
         break;
 
         default : printf("Error\n");
-        chip->pc +=2;
         break;
         }
     break;
@@ -89,98 +88,124 @@ void CHIP8_Decode(CHIP8 * chip)
     case(0x3000): printf("SE V[%X], %X\n",x,kk);
     if (chip->registers_v[x] == kk)
     {
-        chip->pc +=2;
+        chip->pc+=2;
     }
-    chip->pc +=2;
     break;
 
     case(0x4000): printf("SNE V[%X], %X\n",x,kk);
     if (chip->registers_v[x] != kk)
     {
-        chip->pc +=2;
+        chip->pc+=2;
     }
-    chip->pc +=2;
     break;
 
     case(0x5000): printf("SE V[%X], V[%X]\n",x,y);
     if (chip->registers_v[x] == chip->registers_v[y])
     {
-        chip->pc +=2;
+        chip->pc+=2;
     }
-    chip->pc +=2;
     break;
 
     case(0x6000): printf("LD V[%X], %X\n",x,kk);
     chip->registers_v[x] = kk;
-    chip->pc +=2;
     break;
 
     case(0x7000): printf("ADD V[%X], %X\n",x,kk);
     chip->registers_v[x] += kk;
-    chip->pc +=2; 
     break;
 
     case(0x8000):
         switch (chip->opcode & 0x000F)
         {
-        case(0x0000): 
-            chip->pc +=2;break;
+        case(0x0000): printf("LD V[%X], V[%X]\n",x,y);
+        chip->registers_v[x] = chip->registers_v[y];
+        break;
         
-        case(0x0001): 
-            chip->pc +=2;break;
+        case(0x0001): printf("OR V[%X], V[%X]\n",x,y);
+        chip->registers_v[x] = chip->registers_v[x] | chip->registers_v[y];
+        break;
 
-        case(0x0002): 
-            chip->pc +=2;break;
+        case(0x0002): printf("AND V[%X], V[%X]\n",x,y);
+        chip->registers_v[x] = chip->registers_v[x] & chip->registers_v[y];
+        break;
 
-        case(0x0003): 
-            chip->pc +=2;break;
+        case(0x0003): printf("XOR V[%X], V[%X]\n",x,y);
+        chip->registers_v[x] = chip->registers_v[x] ^ chip->registers_v[y];
+        break;
+
+        case(0x0004): printf("ADD V[%X], V[%X]\n",x,y);
+        chip->registers_v[x] = chip->registers_v[x] + chip->registers_v[y];
+        if(chip->registers_v[x] + chip->registers_v[y] > 0xFF){
+            chip->registers_v[0xF] = 1;
+            chip->registers_v[x] = chip->registers_v[x] & 0xFF;
+        }
+        break;
+
+        case(0x0005): printf("SUB V[%X], V[%X]\n",x,y);
+        if(chip->registers_v[x] > chip->registers_v[y]){
+            chip->registers_v[0xF] = 1;
+            chip->registers_v[x] = chip->registers_v[x] - chip->registers_v[y];
+        }
+        break;
+
+        case(0x0006): printf("SHR V[%X], V[%X]\n",x,y);
+        if(chip->registers_v[x] & 0x000F == 1)
+        {
+            chip->registers_v[x] = chip->registers_v[x] >> 1;
+        }
+        break;
+
+        case(0x0007): printf("SUBN V[%X], V[%X]\n",x,y);
+        if(chip->registers_v[y] > chip->registers_v[x]){
+            chip->registers_v[0xF] = 1;
+            chip->registers_v[x] = chip->registers_v[y] - chip->registers_v[x];
+        }
+        break;
         
-        case(0x0004): 
-            chip->pc +=2;break;
-
-        case(0x0005): 
-            chip->pc +=2;break;
-
-        case(0x0006): 
-            chip->pc +=2;break;
-        
-        case(0x0007): 
-            chip->pc +=2;break;
-        
-        case(0x000E): 
-            chip->pc +=2;break;
+        case(0x000E): printf("SHL V[%X], V[%X]\n",x,y);
+        if(chip->registers_v[x] & 0xF000 == 1)
+        {
+            chip->registers_v[x] = chip->registers_v[x] << 1;
+        }
+            break;
         
         default : printf("Error\n");
-            chip->pc +=2;break;
+            break;
         }
     break;
 
-    case(0x9000): 
-        chip->pc +=2;break;
+    case(0x9000): printf("SNE V[%X], V[%X]\n",x,y);
+    if (chip->registers_v[x] != chip->registers_v[y])
+    {
+        chip->pc+=2;
+    }
+        break;
 
-    case(0xA000): 
-        chip->pc +=2;break;
+    case(0xA000): printf("LD I =%X\n",nnn);
+    chip->i = nnn;
+        break;
     
-    case(0xB000): 
-        chip->pc +=2;break;
+    case(0xB000): printf("JP V[0], %X\n",nnn);
+    chip->pc = nnn + chip->registers_v[0];
+        break;
 
     case(0xC000): 
-        chip->pc +=2;break;
+        break;
 
     case(0xD000): 
-        chip->pc +=2;break;
+        break;
 
     case(0xE000):
         switch (chip->opcode & 0x00FF)
         {
         case(0x009E): 
-            chip->pc +=2;break;
+            break;
         
         case(0x00A1):
-            chip->pc +=2;break; 
+            break; 
 
         default : printf("Error\n");
-            chip->pc +=2;break;
+            break;
         }
         break;
 
@@ -188,40 +213,41 @@ void CHIP8_Decode(CHIP8 * chip)
         switch (chip->opcode & 0x00FF)
         {
         case(0x0007): 
-            chip->pc +=2;break;
+            break;
 
         case(0x000A): 
-            chip->pc +=2;break;
+            break;
 
         case(0x0015): 
-            chip->pc +=2;break;
+            break;
 
         case(0x0018): 
-            chip->pc +=2;break;
+            break;
 
         case(0x001E): 
-            chip->pc +=2;break;
+            break;
         
         case(0x0029): 
-            chip->pc +=2;break;
+            break;
         
         case(0x0033): 
-            chip->pc +=2;break;
+            break;
 
         case(0x0055): 
-            chip->pc +=2;break;
+            break;
 
         case(0x0065): 
-            chip->pc +=2;break;
+            break;
 
         
         default : printf("Error\n");
-            chip->pc +=2;break;
+            break;
         }
         break;
     default : printf("Error\n");
-    chip->pc +=2;break;
+    break;
     }
+    chip->pc+=2;
 }
 
 void CHIP8_Run_Cycle(CHIP8* chip)
