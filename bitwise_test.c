@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-
+#include <time.h>
 typedef struct{
     uint8_t emulator_flags;   //8-bit flag
 }TestChip;
@@ -9,54 +9,24 @@ typedef struct{
 TestChip *Create()
 {   
     TestChip *chip1 = malloc(sizeof(TestChip));
-    chip1->emulator_flags = 0;
     return chip1;
 }
 
-void setFlag(char *flag_path,const uint8_t flag)
+void setFlag(TestChip *chip,const uint8_t flag)
 {   
-    uint8_t flag_set = 1;
-
-    flag_set = flag_set << (flag - 1);
-
-    *flag_path = *flag_path | flag_set;
-    printf("Flag %d setted , emulator flag = 0x%X\n",flag,*flag_path);
-}
-
-void clearFlag(char *flag_path)
-{
-    *flag_path = 0;
-    printf("Flag cleared 0x%d\n ",*flag_path);
-}
-
-void flagSetted(char *flag_path)
-{
-    uint8_t testFlag = 1;
-    uint8_t flag;
-
-    printf("Flags setted : ");
-
-    for (int i = 1 ; i <= 8 ; i++)
-    {
-        flag = *flag_path & testFlag;
-
-        if(flag != 0)
-        {
-            printf("%d ",i);
-        }
-        testFlag = testFlag << 1;
-    }
-    printf("\n");
+    chip->emulator_flags = flag & 0xF ;
+    printf("Flag %d setted , emulator flag = 0x%X\n",flag,chip->emulator_flags);
 }
 
 int main()
 {
-    TestChip *chip = Create();
-    setFlag(&chip->emulator_flags,1);
-    setFlag(&chip->emulator_flags,2);
-    setFlag(&chip->emulator_flags,3);
-    flagSetted(&chip->emulator_flags);
-    clearFlag(&chip->emulator_flags);
+    time_t t;
+    srand((unsigned)time(&t));
+    uint8_t randomByte = rand() % 256;
+    printf("%d\n",randomByte);
+    
+    /* TestChip *chip = Create();
+    setFlag(chip,0x8); */
     return 0;
 }
 
