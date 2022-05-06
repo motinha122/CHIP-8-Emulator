@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "chip.h"
 
-int main()
+int main(int argc, char* argv[])
 {
     CHIP8 *chip_chip = CHIP8_Create();
     CHIP8_Load_Rom(chip_chip,"./logo.ch8");
