@@ -21,6 +21,8 @@ CHIP8 *CHIP8_Create();
 
 void CHIP8_Load_Rom(CHIP8 * chip, const char *rom_path);
 
+void CHIP8_Load_Font(CHIP8 * chip);
+
 void CHIP8_Fetch(CHIP8 * chip);
 
 void CHIP8_Decode(CHIP8 * chip);
