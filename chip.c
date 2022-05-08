@@ -10,9 +10,9 @@ CHIP8 *CHIP8_Create()
 
     chip->pc = 0x200;
     chip->sp = -1;
-    memset(chip->memory, 0, MEMSIZE);
-    memset(chip->registers_v, 0, NUMREG);
-    memset(chip->stack, 0, NUMREG);
+    memset(chip->memory, 0, sizeof(chip->memory));
+    memset(chip->registers_v, 0, sizeof(chip->registers_v));
+    memset(chip->stack, 0, sizeof(chip->stack));
 
     printf("\nChip Initialized\n");
 

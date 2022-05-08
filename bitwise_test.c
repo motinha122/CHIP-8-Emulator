@@ -18,15 +18,8 @@ void setFlag(TestChip *chip,const uint8_t flag)
     printf("Flag %d setted , emulator flag = 0x%X\n",flag,chip->emulator_flags);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    time_t t;
-    srand((unsigned)time(&t));
-    uint8_t randomByte = rand() % 256;
-    printf("%d\n",randomByte);
-    
-    /* TestChip *chip = Create();
-    setFlag(chip,0x8); */
     return 0;
 }
 
