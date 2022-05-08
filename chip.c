@@ -26,6 +26,8 @@ void CHIP8_Load_Rom(CHIP8 *chip, const char *rom_path)
     if (rom == NULL)
     {
         printf("Error!");
+        printf("Press Any Key to Continue\n");  
+        getchar();   
         exit(1);
     }
 

@@ -9,7 +9,7 @@ The output was:
 Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
 Copyright (C) Microsoft Corporation. Todos os direitos reservados.
 
-Compilação de 07/05/2022 10:48:42 iniciada.
+Compilação de 08/05/2022 10:09:12 iniciada.
 Projeto "C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" no nó 1 (destinos padrão).
 PrepareForBuild:
   Criando o diretório "Debug\".
@@ -35,7 +35,7 @@ Compilação com êxito.
     0 Aviso(s)
     0 Erro(s)
 
-Tempo Decorrido 00:00:01.32
+Tempo Decorrido 00:00:00.92
 
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -54,7 +54,7 @@ The output was:
 Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
 Copyright (C) Microsoft Corporation. Todos os direitos reservados.
 
-Compilação de 07/05/2022 10:48:44 iniciada.
+Compilação de 08/05/2022 10:09:14 iniciada.
 Projeto "C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" no nó 1 (destinos padrão).
 PrepareForBuild:
   Criando o diretório "Debug\".
@@ -80,7 +80,7 @@ Compilação com êxito.
     0 Aviso(s)
     0 Erro(s)
 
-Tempo Decorrido 00:00:00.80
+Tempo Decorrido 00:00:00.77
 
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -92,28 +92,28 @@ The CXX compiler identification is MSVC, found in "C:/Users/roblo/OneDrive/Docum
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: C:/Users/roblo/OneDrive/Documentos/CHIP-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/MSBuild.exe cmTC_c4365.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/MSBuild.exe cmTC_e254f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
 Copyright (C) Microsoft Corporation. Todos os direitos reservados.
 
   Microsoft (R) C/C++ Optimizing Compiler Versão 19.29.30141 para x64
   Copyright (C) Microsoft Corporation. Todos os direitos reservados.
   CMakeCCompilerABI.c
-  cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c4365.dir\Debug\\" /Fd"cmTC_c4365.dir\Debug\vc142.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCCompilerABI.c"
-  cmTC_c4365.vcxproj -> C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\CMakeTmp\Debug\cmTC_c4365.exe
+  cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e254f.dir\Debug\\" /Fd"cmTC_e254f.dir\Debug\vc142.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCCompilerABI.c"
+  cmTC_e254f.vcxproj -> C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\CMakeTmp\Debug\cmTC_e254f.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: C:/Users/roblo/OneDrive/Documentos/CHIP-8/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/MSBuild.exe cmTC_0af7f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/MSBuild.exe cmTC_6269b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=16.0 /v:m && Microsoft(R) Build Engine versão 16.11.2+f32259642 para .NET Framework 
 Copyright (C) Microsoft Corporation. Todos os direitos reservados.
 
   Microsoft (R) C/C++ Optimizing Compiler Versão 19.29.30141 para x64
   Copyright (C) Microsoft Corporation. Todos os direitos reservados.
   CMakeCXXCompilerABI.cpp
-  cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_0af7f.dir\Debug\\" /Fd"cmTC_0af7f.dir\Debug\vc142.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXCompilerABI.cpp"
-  cmTC_0af7f.vcxproj -> C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\CMakeTmp\Debug\cmTC_0af7f.exe
+  cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_6269b.dir\Debug\\" /Fd"cmTC_6269b.dir\Debug\vc142.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXCompilerABI.cpp"
+  cmTC_6269b.vcxproj -> C:\Users\roblo\OneDrive\Documentos\CHIP-8\build\CMakeFiles\CMakeTmp\Debug\cmTC_6269b.exe
 
 
 
