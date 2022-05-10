@@ -1,3 +1,5 @@
 *.vscode
 *bitwise_test.c
 *bitwise_test.exe
+*sdltest.c
+*sdltest.exe
