@@ -1,8 +1,9 @@
+#include "chip.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-#include "chip.h"
-//#include <SDL2/SDL.h>
+#include <stdbool.h>
+#include <SDL2/SDL.h>
 
 CHIP8 *CHIP8_Create()
 {
@@ -278,6 +279,25 @@ void CHIP8_Run_Cycle(CHIP8 *chip) // run cycle disassembly
         CHIP8_Fetch(chip);
         CHIP8_Decode(chip);
     }
+}
+
+int Video()
+{
+    SDL_Window * window;
+    SDL_Renderer * renderer;
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    window = SDL_CreateWindow("Game Window",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_WIDTH,SCREEN_HEIGHT,0);
+    renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+
+    SDL_SetRenderDrawColor(renderer, 112 , 112, 255 , 255);
+    SDL_Delay(2000);
+    
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
+    
 }
 
 void CHIP8_Debugger(CHIP8 *chip)
