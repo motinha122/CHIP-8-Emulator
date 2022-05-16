@@ -1,3 +1,0 @@
-C:/Users/roblo/OneDrive/Documentos/CHIP-8/build/CMakeFiles/Chip-8.dir
-C:/Users/roblo/OneDrive/Documentos/CHIP-8/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/roblo/OneDrive/Documentos/CHIP-8/build/CMakeFiles/ZERO_CHECK.dir
