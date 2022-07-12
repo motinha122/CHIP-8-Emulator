@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "chip.h"
-//#include <SDL2/SDL.h>
 
 CHIP8 *CHIP8_Create()
 {
