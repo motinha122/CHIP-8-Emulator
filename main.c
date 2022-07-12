@@ -1,7 +1,12 @@
+#include <SDL2/SDL_pixels.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_surface.h>
+#include <SDL2/SDL_video.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "chip.h"
+#include <SDL2/SDL.h>
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -13,6 +18,31 @@ int main(int argc, char* argv[])
     CHIP8_Load_Font(chip_chip);
     CHIP8_Run_Cycle(chip_chip);
   
+    if(SDL_Init(SDL_INIT_VIDEO) <0 ){
+        printf("Fail");
+        return -1;
+    }
+
+    SDL_Window * window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 680, 480,SDL_WINDOW_SHOWN);
+
+    if(!window){
+        printf("Fail");
+        return -1;
+    }
+
+    SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+
+    if(!renderer){
+        printf("Fail");
+        return -1;
+    }
+
+    SDL_RenderSetLogicalSize(renderer, 680, 480);
+
+    SDL_Texture * texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 64, 32);
+
+    
+
     //CHIP8_Debugger(chip_chip);
 
     return 0;

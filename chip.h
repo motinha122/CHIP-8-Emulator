@@ -1,5 +1,7 @@
 #ifndef CHIP_H
 #define CHIP_H
+#include <cstdint>
+#include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 #define MEMSIZE 4096
@@ -14,7 +16,9 @@ typedef struct
     uint16_t opcode; // 16-bit Opcode
     uint8_t registers_v[NUMREG];  //8-bit V Registers
     uint16_t i; // 16-bit I Register                                            
-    uint16_t stack[NUMREG]; // 16-bit Stack                         
+    uint16_t stack[NUMREG]; // 16-bit Stack 
+
+    bool drawFlag; // DRAW FLAG                  
 }CHIP8;
 
 CHIP8 *CHIP8_Create();

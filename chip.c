@@ -12,7 +12,7 @@ CHIP8 *CHIP8_Create()
     memset(chip->memory, 0, sizeof(chip->memory));
     memset(chip->registers_v, 0, sizeof(chip->registers_v));
     memset(chip->stack, 0, sizeof(chip->stack));
-
+    chip->drawFlag = false;
     printf("\nChip Initialized\n");
 
     return chip;
@@ -80,8 +80,8 @@ void CHIP8_Decode(CHIP8 *chip)
 {
     uint16_t nnn = chip->opcode & 0x0FFF;
     uint16_t n = chip->opcode & 0x000F;
-    uint16_t x = chip->opcode & 0x0F00;
-    uint16_t y = chip->opcode & 0x00F0;
+    uint16_t x = (chip->opcode & 0x0F00) >> 8; 
+    uint16_t y = (chip->opcode & 0x00F0) >> 4; 
     uint16_t kk = chip->opcode & 0x00FF;
 
     uint8_t regx = chip->registers_v[x];
