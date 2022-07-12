@@ -13,7 +13,6 @@ int main(int argc, char* argv[])
     CHIP8_Load_Rom(chip_chip,"./logo.ch8");
     CHIP8_Load_Font(chip_chip);
     CHIP8_Run_Cycle(chip_chip);
-<<<<<<< HEAD
     SDL_Window * window;
     SDL_Renderer * renderer;
 
@@ -28,9 +27,7 @@ int main(int argc, char* argv[])
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
-=======
 
->>>>>>> parent of 2c60545 (Sdl into chip.c)
     //CHIP8_Debugger(chip_chip);
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
         printf("Error: SDL failed to initialize\nSDL Error: '%s'\n", SDL_GetError());
