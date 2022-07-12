@@ -15,7 +15,6 @@ int main(int argc, char* argv[])
   
     //CHIP8_Debugger(chip_chip);
 
-    }  
     return 0;
 }
 
