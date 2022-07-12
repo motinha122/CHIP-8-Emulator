@@ -4,9 +4,6 @@
 #include <string.h>
 #define MEMSIZE 4096
 #define NUMREG 16
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
-
 
 typedef struct
 {
@@ -33,7 +30,5 @@ void CHIP8_Decode(CHIP8 * chip);
 void CHIP8_Run_Cycle(CHIP8 * chip);
 
 void CHIP8_Debugger(CHIP8 * chip);
-
-int Video();
 
 #endif
