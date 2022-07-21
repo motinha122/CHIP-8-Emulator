@@ -1,6 +1,5 @@
 #ifndef CHIP_H
 #define CHIP_H
-#include <cstdint>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
