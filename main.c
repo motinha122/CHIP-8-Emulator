@@ -40,9 +40,6 @@ int main(int argc, char* argv[])
     SDL_RenderSetLogicalSize(renderer, 680, 480);
 
     SDL_Texture * texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 64, 32);
-
-    
-
     //CHIP8_Debugger(chip_chip);
 
     return 0;
