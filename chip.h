@@ -3,19 +3,17 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#define MEMSIZE 4096
-#define NUMREG 16
 
 typedef struct
 {
-    uint8_t memory[MEMSIZE]; //Ram 4096bytes            
+    uint8_t memory[4096]; //Ram 4096bytes            
     uint16_t rom_size;  //Rom Size                                  
     uint16_t pc; //16-bit Program Counter                    
     uint16_t sp; // 16-bit Stack Pointer
     uint16_t opcode; // 16-bit Opcode
-    uint8_t registers_v[NUMREG];  //8-bit V Registers
+    uint8_t registers_v[16];  //8-bit V Registers
     uint16_t i; // 16-bit I Register                                            
-    uint16_t stack[NUMREG]; // 16-bit Stack 
+    uint16_t stack[16]; // 16-bit Stack 
 
     bool drawFlag; // DRAW FLAG                  
 }CHIP8;
