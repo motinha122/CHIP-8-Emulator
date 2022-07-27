@@ -84,6 +84,8 @@ void CHIP8_Decode(CHIP8 *chip)
     uint16_t y = (chip->opcode & 0x00F0) >> 4; 
     uint16_t kk = chip->opcode & 0x00FF;
 
+    chip->pc += 2;
+
     printf("NNN:%X,N:%X,X:%X,Y:%X,KK:%X\n", nnn, n, x, y, kk);
 
     switch (chip->opcode & 0xF000)
@@ -264,16 +266,12 @@ void CHIP8_Decode(CHIP8 *chip)
         printf("Error\n");
         break;
     }
-    chip->pc += 2;
 }
 
 void CHIP8_Run_Cycle(CHIP8 *chip) // run cycle disassembly
 {
-    for (uint16_t i = 0; i < chip->rom_size / 2; i++)
-    {
-        CHIP8_Fetch(chip);
-        CHIP8_Decode(chip);
-    }
+    CHIP8_Fetch(chip);
+    CHIP8_Decode(chip);
 }
 
 void CHIP8_Debugger(CHIP8 *chip)
