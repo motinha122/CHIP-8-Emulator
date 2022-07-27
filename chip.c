@@ -84,9 +84,6 @@ void CHIP8_Decode(CHIP8 *chip)
     uint16_t y = (chip->opcode & 0x00F0) >> 4; 
     uint16_t kk = chip->opcode & 0x00FF;
 
-    uint8_t regx = chip->registers_v[x];
-    uint8_t regy = chip->registers_v[y];
-
     printf("NNN:%X,N:%X,X:%X,Y:%X,KK:%X\n", nnn, n, x, y, kk);
 
     switch (chip->opcode & 0xF000)
@@ -118,62 +115,62 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0x3000):
-        printf("SE V[%X], %X\n", regx, kk);
+        printf("SE V[%X], %X\n", chip->registers_v[x], kk);
         break;
 
     case (0x4000):
-        printf("SNE V[%X], %X\n", regx, kk);
+        printf("SNE V[%X], %X\n", chip->registers_v[x], kk);
         break;
 
     case (0x5000):
-        printf("SE V[%X], V[%X]\n", regx, regy);
+        printf("SE V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
         break;
 
     case (0x6000):
-        printf("LD V[%X], %X\n", regx, kk);
+        printf("LD V[%X], %X\n", chip->registers_v[x], kk);
         break;
 
     case (0x7000):
-        printf("ADD V[%X], %X\n", regx, kk);
+        printf("ADD V[%X], %X\n", chip->registers_v[x], kk);
         break;
 
     case (0x8000):
         switch (chip->opcode & 0x000F)
         {
         case (0x0000):
-            printf("LD V[%X], V[%X]\n", regx, regy);
+            printf("LD V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0001):
-            printf("OR V[%X], V[%X]\n", regx, regy);
+            printf("OR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0002):
-            printf("AND V[%X], V[%X]\n", regx, regy);
+            printf("AND V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0003):
-            printf("XOR V[%X], V[%X]\n", regx, regy);
+            printf("XOR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0004):
-            printf("ADD V[%X], V[%X]\n", regx, regy);
+            printf("ADD V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0005):
-            printf("SUB V[%X], V[%X]\n", regx, regy);
+            printf("SUB V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0006):
-            printf("SHR V[%X], V[%X]\n", regx, regy);
+            printf("SHR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x0007):
-            printf("SUBN V[%X], V[%X]\n", regx, regy);
+            printf("SUBN V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         case (0x000E):
-            printf("SHL V[%X], V[%X]\n", regx, regy);
+            printf("SHL V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
             break;
 
         default:
@@ -183,7 +180,7 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0x9000):
-        printf("SNE V[%X], V[%X]\n", regx, regy);
+        printf("SNE V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
         break;
 
     case (0xA000):
@@ -195,22 +192,22 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0xC000):
-        printf("RND V[%X], %X\n", regx, kk);
+        printf("RND V[%X], %X\n", chip->registers_v[x], kk);
         break;
 
     case (0xD000):
-        printf("DRW V[%X], V[%X], %X\n", regx, regy, n);
+        printf("DRW V[%X], V[%X], %X\n", chip->registers_v[x], chip->registers_v[y], n);
         break;
 
     case (0xE000):
         switch (chip->opcode & 0x00FF)
         {
         case (0x009E):
-            printf("SKP V[%X]\n", regx);
+            printf("SKP V[%X]\n", chip->registers_v[x]);
             break;
 
         case (0x00A1):
-            printf("SKNP V[%X]\n", regx);
+            printf("SKNP V[%X]\n", chip->registers_v[x]);
             break;
 
         default:
@@ -223,39 +220,39 @@ void CHIP8_Decode(CHIP8 *chip)
         switch (chip->opcode & 0x00FF)
         {
         case (0x0007):
-            printf("LD V[%X], DT\n", regx);
+            printf("LD V[%X], DT\n", chip->registers_v[x]);
             break;
 
         case (0x000A):
-            printf("LD V[%X], K\n", regx);
+            printf("LD V[%X], K\n", chip->registers_v[x]);
             break;
 
         case (0x0015):
-            printf("LD DT, V[%X]\n", regx);
+            printf("LD DT, V[%X]\n", chip->registers_v[x]);
             break;
 
         case (0x0018):
-            printf("LD ST, V[%X]\n", regx);
+            printf("LD ST, V[%X]\n", chip->registers_v[x]);
             break;
 
         case (0x001E):
-            printf("ADD %X, V[%X]\n", chip->i, regx);
+            printf("ADD %X, V[%X]\n", chip->i, chip->registers_v[x]);
             break;
 
         case (0x0029):
-            printf("LD F, V[%X]\n", regx);
+            printf("LD F, V[%X]\n", chip->registers_v[x]);
             break;
 
         case (0x0033):
-            printf("LD B, V[%X]\n", regx);
+            printf("LD B, V[%X]\n", chip->registers_v[x]);
             break;
 
         case (0x0055):
-            printf("LD [%X], V[%X]\n", chip->i, regx);
+            printf("LD [%X], V[%X]\n", chip->i, chip->registers_v[x]);
             break;
 
         case (0x0065):
-            printf("LD V[%X], [%X]\n", regx, chip->i);
+            printf("LD V[%X], [%X]\n", chip->registers_v[x], chip->i);
             break;
 
         default:
