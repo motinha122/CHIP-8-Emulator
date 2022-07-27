@@ -56,6 +56,10 @@ int main(int argc, char* argv[])
             }
         }
 
+        if (chip_chip->drawFlag == false){
+            printf("Drawflag: %i",chip_chip->drawFlag);
+        }
+
     }
 
     // SDL_RenderClear(renderer);

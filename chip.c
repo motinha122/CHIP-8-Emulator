@@ -199,6 +199,8 @@ void CHIP8_Decode(CHIP8 *chip)
 
     case (0xD000):
         printf("DRW V[%X], V[%X], %X\n", chip->registers_v[x], chip->registers_v[y], n);
+        
+
         break;
 
     case (0xE000):
