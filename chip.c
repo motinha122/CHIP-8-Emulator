@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <sys/types.h>
 #include "chip.h"
 
 CHIP8 *CHIP8_Create()
@@ -79,10 +80,11 @@ void CHIP8_Fetch(CHIP8 *chip)
 void CHIP8_Decode(CHIP8 *chip)
 {
     uint16_t nnn = chip->opcode & 0x0FFF;
-    uint16_t n = chip->opcode & 0x000F;
+    uint16_t n = chip->opcode & 0x000F; 
     uint16_t x = (chip->opcode & 0x0F00) >> 8; 
     uint16_t y = (chip->opcode & 0x00F0) >> 4; 
     uint16_t kk = chip->opcode & 0x00FF;
+    uint16_t pixel;
 
     chip->pc += 2;
 
@@ -199,6 +201,7 @@ void CHIP8_Decode(CHIP8 *chip)
 
     case (0xD000):
         printf("DRW V[%X], V[%X], %X\n", chip->registers_v[x], chip->registers_v[y], n);
+        chip->registers_v[0xF] = 0;
         
 
         break;

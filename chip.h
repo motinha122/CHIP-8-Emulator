@@ -14,7 +14,7 @@ typedef struct
     uint8_t registers_v[16];  //8-bit V Registers
     uint16_t i; // 16-bit I Register                                            
     uint16_t stack[16]; // 16-bit Stack 
-
+    uint8_t graphic_buffer[64 * 32]; // Graphical Buffer 2048 pixels 
     bool drawFlag; // DRAW FLAG                  
 }CHIP8;
 
