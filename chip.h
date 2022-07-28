@@ -11,7 +11,7 @@ typedef struct
     uint16_t pc; //16-bit Program Counter                    
     uint16_t sp; // 16-bit Stack Pointer
     uint16_t opcode; // 16-bit Opcode
-    uint8_t registers_v[16];  //8-bit V Registers
+    uint8_t reg_v[16];  //8-bit V Registers
     uint16_t i; // 16-bit I Register                                            
     uint16_t stack[16]; // 16-bit Stack 
     uint8_t graphic_buffer[64 * 32]; // Graphical Buffer 2048 pixels 
@@ -23,7 +23,7 @@ CHIP8 *CHIP8_Create();
 void CHIP8_Load_Rom(CHIP8 * chip, const char *rom_path);
 
 void CHIP8_Load_Font(CHIP8 * chip);
-
+ 
 void CHIP8_Fetch(CHIP8 * chip);
 
 void CHIP8_Decode(CHIP8 * chip);

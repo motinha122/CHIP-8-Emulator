@@ -11,7 +11,7 @@ CHIP8 *CHIP8_Create()
     chip->pc = 0x200;
     chip->sp = -1;
     memset(chip->memory, 0, sizeof(chip->memory));
-    memset(chip->registers_v, 0, sizeof(chip->registers_v));
+    memset(chip->reg_v, 0, sizeof(chip->reg_v));
     memset(chip->stack, 0, sizeof(chip->stack));
     chip->drawFlag = false;
     printf("\nChip Initialized\n");
@@ -119,62 +119,62 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0x3000):
-        printf("SE V[%X], %X\n", chip->registers_v[x], kk);
+        printf("SE V[%X], %X\n", chip->reg_v[x], kk);
         break;
 
     case (0x4000):
-        printf("SNE V[%X], %X\n", chip->registers_v[x], kk);
+        printf("SNE V[%X], %X\n", chip->reg_v[x], kk);
         break;
 
     case (0x5000):
-        printf("SE V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+        printf("SE V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
         break;
 
     case (0x6000):
-        printf("LD V[%X], %X\n", chip->registers_v[x], kk);
+        printf("LD V[%X], %X\n", chip->reg_v[x], kk);
         break;
 
     case (0x7000):
-        printf("ADD V[%X], %X\n", chip->registers_v[x], kk);
+        printf("ADD V[%X], %X\n", chip->reg_v[x], kk);
         break;
 
     case (0x8000):
         switch (chip->opcode & 0x000F)
         {
         case (0x0000):
-            printf("LD V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("LD V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0001):
-            printf("OR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("OR V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0002):
-            printf("AND V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("AND V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0003):
-            printf("XOR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("XOR V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0004):
-            printf("ADD V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("ADD V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0005):
-            printf("SUB V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("SUB V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0006):
-            printf("SHR V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("SHR V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x0007):
-            printf("SUBN V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("SUBN V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         case (0x000E):
-            printf("SHL V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+            printf("SHL V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
             break;
 
         default:
@@ -184,7 +184,7 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0x9000):
-        printf("SNE V[%X], V[%X]\n", chip->registers_v[x], chip->registers_v[y]);
+        printf("SNE V[%X], V[%X]\n", chip->reg_v[x], chip->reg_v[y]);
         break;
 
     case (0xA000):
@@ -192,17 +192,32 @@ void CHIP8_Decode(CHIP8 *chip)
         break;
 
     case (0xB000):
-        printf("JP V[0], %X\n", nnn + chip->registers_v[0]);
+        printf("JP V[0], %X\n", nnn + chip->reg_v[0]);
         break;
 
     case (0xC000):
-        printf("RND V[%X], %X\n", chip->registers_v[x], kk);
+        printf("RND V[%X], %X\n", chip->reg_v[x], kk);
         break;
 
     case (0xD000):
-        printf("DRW V[%X], V[%X], %X\n", chip->registers_v[x], chip->registers_v[y], n);
-        chip->registers_v[0xF] = 0;
-        
+        printf("DRW V[%X], V[%X], %X\n", chip->reg_v[x], chip->reg_v[y], n);
+        chip->reg_v[0xF] = 0;
+        for (int yline = 0; yline < n; yline++)
+        {
+            pixel = chip->memory[chip->i + yline];
+            for(int xline = 0; xline < 8; xline++)
+            {
+                if((pixel & (0x80 >> xline)) != 0)
+                {
+                    if(chip->graphic_buffer[chip->reg_v[x] + xline + ((chip->reg_v[y] + yline) * 64)] == 1)
+                    {
+                        chip->reg_v[0xF] = 1;
+                        chip->graphic_buffer[chip->reg_v[x] + xline + ((chip->reg_v[y] + yline) * 64)] ^= 1;
+                    }    
+                }
+            }
+        }
+        chip->drawFlag = true;
 
         break;
 
@@ -210,11 +225,11 @@ void CHIP8_Decode(CHIP8 *chip)
         switch (chip->opcode & 0x00FF)
         {
         case (0x009E):
-            printf("SKP V[%X]\n", chip->registers_v[x]);
+            printf("SKP V[%X]\n", chip->reg_v[x]);
             break;
 
         case (0x00A1):
-            printf("SKNP V[%X]\n", chip->registers_v[x]);
+            printf("SKNP V[%X]\n", chip->reg_v[x]);
             break;
 
         default:
@@ -227,39 +242,39 @@ void CHIP8_Decode(CHIP8 *chip)
         switch (chip->opcode & 0x00FF)
         {
         case (0x0007):
-            printf("LD V[%X], DT\n", chip->registers_v[x]);
+            printf("LD V[%X], DT\n", chip->reg_v[x]);
             break;
 
         case (0x000A):
-            printf("LD V[%X], K\n", chip->registers_v[x]);
+            printf("LD V[%X], K\n", chip->reg_v[x]);
             break;
 
         case (0x0015):
-            printf("LD DT, V[%X]\n", chip->registers_v[x]);
+            printf("LD DT, V[%X]\n", chip->reg_v[x]);
             break;
 
         case (0x0018):
-            printf("LD ST, V[%X]\n", chip->registers_v[x]);
+            printf("LD ST, V[%X]\n", chip->reg_v[x]);
             break;
 
         case (0x001E):
-            printf("ADD %X, V[%X]\n", chip->i, chip->registers_v[x]);
+            printf("ADD %X, V[%X]\n", chip->i, chip->reg_v[x]);
             break;
 
         case (0x0029):
-            printf("LD F, V[%X]\n", chip->registers_v[x]);
+            printf("LD F, V[%X]\n", chip->reg_v[x]);
             break;
 
         case (0x0033):
-            printf("LD B, V[%X]\n", chip->registers_v[x]);
+            printf("LD B, V[%X]\n", chip->reg_v[x]);
             break;
 
         case (0x0055):
-            printf("LD [%X], V[%X]\n", chip->i, chip->registers_v[x]);
+            printf("LD [%X], V[%X]\n", chip->i, chip->reg_v[x]);
             break;
 
         case (0x0065):
-            printf("LD V[%X], [%X]\n", chip->registers_v[x], chip->i);
+            printf("LD V[%X], [%X]\n", chip->reg_v[x], chip->i);
             break;
 
         default:
@@ -300,7 +315,7 @@ void CHIP8_Debugger(CHIP8 *chip)
 
     for(int i = 0; i < 16 ; i++)
     {
-        chip->registers_v[i] = i;
-        printf("V%x:0x%X\n",i,chip->registers_v[i]);
+        chip->reg_v[i] = i;
+        printf("V%x:0x%X\n",i,chip->reg_v[i]);
     } */
 }
