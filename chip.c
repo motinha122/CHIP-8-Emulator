@@ -218,7 +218,6 @@ void CHIP8_Decode(CHIP8 *chip)
             }
         }
         chip->drawFlag = true;
-
         break;
 
     case (0xE000):
